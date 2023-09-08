@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image to ASCII Art Converter</title>
+    <style>
+        /* Add your CSS styles here */
+        body {
+            font-family: monospace;
+            text-align: center;
+        }
+        #output {
+            white-space: pre;
+        }
+    </style>
+</head>
+<body>
+    <h1>Image to ASCII Art Converter</h1>
+    <input type="file" id="imageInput" accept="image/*">
+    <div id="output"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ascii-art/0.4.0/ascii-art.min.js"></script>
+    <script>
+        document.getElementById('imageInput').addEventListener('change', function (e) {
+            const file = e.target.files[0];
+
+            if (file) {
+                const reader = new FileReader();
+
+                reader.onload = function (e) {
+                    const imgDataUrl = e.target.result;
+
+                    ascii.fromURL(imgDataUrl, function (err, converted) {
+                        if (err) throw err;
+                        document.getElementById('output').innerHTML = converted;
+                    });
+                };
+
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
+</body>
+</html>
